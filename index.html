@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ครีมทาร์ตที่ว่าเด็ด ยังไม่เท่าแม่ค้า</title>
+
+<style>
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: url("bg.jpg") center/cover no-repeat fixed;
+}
+.wrap{
+  max-width:420px;
+  margin:auto;
+  padding:20px;
+}
+.card{
+  background: rgba(255,255,255,.75);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+h2{
+  text-align:center;
+  color:#b0578a;
+  margin-top:0;
+}
+button{
+  width:100%;
+  border:none;
+  padding:14px;
+  margin:10px 0;
+  font-size:18px;
+  border-radius:999px;
+  background:#f3c7d1;
+  color:#7a3f59;
+  font-weight:700;
+  cursor:pointer;
+}
+button:active{transform:scale(.98)}
+img{
+  max-width:100%;
+  border-radius:16px;
+  margin-bottom:14px;
+}
+.label{
+  text-align:center;
+  color:#7a3f59;
+  font-size:14px;
+  margin-bottom:6px;
+}
+.back{
+  background:#eee;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<!-- หน้าเลือกแพ็ก -->
+<div class="card" id="home">
+  <h2>เลือกจำนวนถ้วย</h2>
+  <button onclick="openPack(1)">1 ถ้วย</button>
+  <button onclick="openPack(2)">2 ถ้วย</button>
+  <button onclick="openPack(3)">3 ถ้วย</button>
+  <button onclick="openPack(4)">4 ถ้วย</button>
+  <button onclick="openPack(5)">5 ถ้วย</button>
+</div>
+
+<!-- หน้าแสดงบัตร -->
+<div class="card" id="result" style="display:none">
+  <h2 id="title"></h2>
+  <div id="cards"></div>
+  <button class="back" onclick="goHome()">← กลับ</button>
+</div>
+
+</div>
+
+<script>
+const home = document.getElementById("home");
+const result = document.getElementById("result");
+const cardsBox = document.getElementById("cards");
+const title = document.getElementById("title");
+
+function goHome(){
+  result.style.display="none";
+  home.style.display="block";
+}
+
+function openPack(n){
+  home.style.display="none";
+  result.style.display="block";
+  title.textContent = ` แคปหน้านี้เพื่อยืนยัน`;
+  cardsBox.innerHTML = "";
+
+  // บัตรภาพรวม
+  addCard("https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/616075503_25080218371651715_1302798081231138300_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_ohc=yqDOe6e0vNAQ7kNvwGC6pTI&_nc_oc=Adnr7ibKMD3X9ldFGGv_zEX2dF4Spk_Fyv0BfQ94F4fEECtggqpwGRlEZAFJtSiiaEo&_nc_zt=23&_nc_ht=scontent.fbkk28-1.fna&_nc_gid=X_mGpsXQxWR3GzK8FyrlIQ&oh=00_Afp0sMX0x2e5ApNyGijdOzDVdvR-ARYS8F1VzpRnjZJAhQ&oe=69702F82","บัตรภาพรวม");
+
+  // บัตรเจาะจง (มีแค่ 1 ใบ)
+  if(n>=2){
+    const map = {
+      2:"q1.jpg",
+      3:"q2.jpg",
+      4:"q3.jpg",
+      5:"q4.jpg"
+    };
+    addCard(`cards/${map[n]}`,`บัตรเจาะจง ${n-1} คำถาม`);
+  }
+}
+
+function addCard(src,label){
+  const p = document.createElement("div");
+  p.className="label";
+  p.textContent = label;
+
+  const img = document.createElement("img");
+  img.src = src;
+
+  cardsBox.appendChild(p);
+  cardsBox.appendChild(img);
+}
+</script>
+
+</body>
+</html>
